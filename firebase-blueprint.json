@@ -1,0 +1,120 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile tracking usage and premium status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email", "description": "User email" },
+        "generationCount": { "type": "integer", "description": "Number of study guides generated" },
+        "isPremium": { "type": "boolean", "description": "Whether the user has paid for unlimited access" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp" }
+      },
+      "required": ["uid", "email", "generationCount", "isPremium"]
+    },
+    "StudyGuide": {
+      "title": "Study Guide",
+      "description": "A generated study guide for a topic",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Owner UID" },
+        "topic": { "type": "string", "description": "The topic name" },
+        "content": { "type": "string", "description": "JSON stringified guide content (sections, charts, etc.)" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Generation timestamp" }
+      },
+      "required": ["uid", "topic", "content", "createdAt"]
+    },
+    "StudyGuideImage": {
+      "title": "Study Guide Image",
+      "description": "An image associated with a study guide section",
+      "type": "object",
+      "properties": {
+        "sectionIndex": { "type": "integer", "description": "The index of the section this image belongs to" },
+        "imageUrl": { "type": "string", "description": "Base64 encoded image data" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp" }
+      },
+      "required": ["sectionIndex", "imageUrl", "createdAt"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message in the AI chat assistant",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User UID" },
+        "role": { "type": "string", "enum": ["user", "model"], "description": "Message sender role" },
+        "text": { "type": "string", "description": "Message content" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Message timestamp" }
+      },
+      "required": ["uid", "role", "text", "createdAt"]
+    },
+    "PaymentRequest": {
+      "title": "Payment Request",
+      "description": "A request for payment verification",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User UID" },
+        "email": { "type": "string", "format": "email", "description": "User email" },
+        "planName": { "type": "string", "description": "The plan name" },
+        "amount": { "type": "integer", "description": "The amount paid" },
+        "status": { "type": "string", "enum": ["pending", "verified"], "description": "Verification status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Request timestamp" }
+      },
+      "required": ["uid", "email", "planName", "amount", "status", "createdAt"]
+    },
+    "AdminConfig": {
+      "title": "Admin Config",
+      "description": "Admin credentials and configuration",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email", "description": "Admin email" },
+        "passwordHash": { "type": "string", "description": "Admin password" }
+      },
+      "required": ["email", "passwordHash"]
+    },
+    "LeaderboardEntry": {
+      "title": "Leaderboard Entry",
+      "description": "A score entry for the leaderboard",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User UID" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "photoURL": { "type": "string", "description": "User photo URL" },
+        "score": { "type": "integer", "description": "Quiz score" },
+        "quizTitle": { "type": "string", "description": "The quiz title" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Entry timestamp" }
+      },
+      "required": ["uid", "displayName", "score", "quizTitle", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/studyGuides/{guideId}": {
+      "schema": "StudyGuide",
+      "description": "Generated study guides"
+    },
+    "/studyGuides/{guideId}/images/{imageId}": {
+      "schema": "StudyGuideImage",
+      "description": "Images for study guide sections"
+    },
+    "/users/{userId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "User-specific chat history"
+    },
+    "/leaderboard/{entryId}": {
+      "schema": "LeaderboardEntry",
+      "description": "Global leaderboard entries"
+    },
+    "/paymentRequests/{requestId}": {
+      "schema": "PaymentRequest",
+      "description": "Payment verification requests"
+    },
+    "/config/admin": {
+      "schema": "AdminConfig",
+      "description": "Admin configuration"
+    }
+  }
+}
