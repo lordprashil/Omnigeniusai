@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-slate-900 bg-slate-50 transition-colors duration-300;
+  }
+  
+  .dark body {
+    @apply text-slate-100 bg-slate-950;
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .translate-z-16 {
+    transform: translateZ(64px);
+  }
+  .-translate-z-16 {
+    transform: translateZ(-64px);
+  }
+  .translate-x-16 {
+    transform: translateX(64px);
+  }
+  .-translate-x-16 {
+    transform: translateX(-64px);
+  }
+  .translate-y-16 {
+    transform: translateY(64px);
+  }
+  .-translate-y-16 {
+    transform: translateY(-64px);
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  .rotate-y-90 {
+    transform: rotateY(90deg);
+  }
+  .-rotate-y-90 {
+    transform: rotateY(-90deg);
+  }
+  .rotate-x-90 {
+    transform: rotateX(90deg);
+  }
+  .-rotate-x-90 {
+    transform: rotateX(-90deg);
+  }
+}
+
+.prose h1, .prose h2, .prose h3 {
+  @apply font-bold tracking-tight text-slate-900 transition-colors duration-300;
+}
+
+.dark .prose h1, .dark .prose h2, .dark .prose h3 {
+  @apply text-slate-100;
+}
+
+.prose p {
+  @apply text-slate-600 leading-relaxed mb-4 transition-colors duration-300;
+}
+
+.dark .prose p {
+  @apply text-slate-400;
+}
+
+.prose strong {
+  @apply font-semibold text-slate-900 transition-colors duration-300;
+}
+
+.dark .prose strong {
+  @apply text-slate-100;
+}
